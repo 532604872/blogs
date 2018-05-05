@@ -1,0 +1,427 @@
+// variables-mixins.less
+// version: 1.0
+
+
+// 定义全局变量
+
+// 主题色
+
+@brand-color: #226dd4;
+@btn-primary-bg:                 @brand-color;
+@btn-primary-border:             darken(@btn-primary-bg, 5%);
+
+
+// 字体
+
+@font-color: #333;
+@font-family: 'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+
+@title-color: @font-color;
+@line-color: #ddd;
+
+// 路径
+
+@position: "../";
+
+
+// 定义全局混合
+
+
+// 透明度
+.opacity(@opacity) {
+ -khtml-opacity: @opacity; 
+   -moz-opacity: @opacity;   
+        opacity: @opacity;
+	
+	// IE8 filter
+  @opacity-ie: (@opacity * 100);
+  filter: ~"alpha(opacity=@{opacity-ie})";
+}
+
+
+// 圆角
+.border-radius(@radius) {
+  // Safari 和 Chrome
+  -webkit-border-radius: @radius;
+     // Firefox 4
+     -moz-border-radius: @radius;
+      // IE
+      -ms-border-radius: @radius;
+       // Opera
+	     -o-border-radius: @radius;
+          // default 
+          border-radius: @radius;
+}
+.border-top-radius(@radius) {
+  border-top-right-radius: @radius;
+   border-top-left-radius: @radius;
+}
+.border-right-radius(@radius) {
+  border-bottom-right-radius: @radius;
+     border-top-right-radius: @radius;
+}
+.border-bottom-radius(@radius) {
+  border-bottom-right-radius: @radius;
+   border-bottom-left-radius: @radius;
+}
+.border-left-radius(@radius) {
+  border-bottom-left-radius: @radius;
+     border-top-left-radius: @radius;
+}
+
+
+// 阴影
+.box-shadow(@shadow) {
+  // Safari 和 Chrome
+  -webkit-box-shadow: @shadow;
+     // Firefox 4
+     -moz-box-shadow: @shadow;
+      // IE
+      -ms-box-shadow: @shadow;
+       // Opera
+	     -o-box-shadow: @shadow;
+          // default
+          box-shadow: @shadow;
+}
+
+
+
+
+
+// -------------------------------------------------------------------------
+
+// maomao.less
+// version: 2.0
+// author: Mr.Z
+
+// **************************** 基本函数 ***********************************
+
+
+
+
+// 通过递归实现循环
+.flow-ico(@className; @n) when (isstring(@className)){
+  @t : e(@className);
+  .for(@n);
+  .for(@n; @i: 1) when (@i =< @n) {
+  　　@{t}@{i}{background-position: (-100px * (@i - 1)) -100px;}
+     .for(@n; (@i + 1));
+  }
+}
+
+.for(@header; @attribute; @array; @number) when (isstring(@header)) and (iskeyword(@attribute)) and (isnumber(@number)){
+  @t : e(@header);
+  .for(length(@array));
+  .for(@n; @i: 1) when (@i <= @n){
+    @j : extract(@array, @i);
+    .@{t}@{j}{
+      @{attribute}: @number * @j;
+    }
+    .for(@n; (@i + 1));
+  }
+}
+
+
+
+// 兼容属性
+// 有三个属性：*注意：judge*
+// judge:true ---属性兼容
+// judge:false---样式兼容
+.compatibility-attribute(@attribute; @value; @judge) when (@judge) and (isstring(@value)){
+  @compatibility: '-webkit-', '-moz-', '-ms-', '-o-', ' ';
+  .for(length(@compatibility));
+  .for(@n; @i:1)when(@i =< @n){
+    @t: e(extract(@compatibility, @i));
+    @j: '@{value}';
+    @{t}@{attribute}: e(@j);
+    .for(@n; (@i + 1));
+  }
+}
+.compatibility-attribute(@attribute; @value; @judge) when (isstring(@value)) and (default()){
+  @compatibility: '-webkit-', '-moz-', '-ms-', '-o-', ' ';
+  .for(length(@compatibility));
+  .for(@n; @i:1)when(@i =< @n){
+    @t: e(extract(@compatibility, @i));
+    @j: '@{t}@{value}';
+    @{attribute}: e(@j);
+    .for(@n; (@i + 1));
+  }
+}
+
+
+
+
+// **************************** 特定样式命名 ***********************************
+
+
+
+
+// 边框
+.border(0) {border: 0;}
+.border(@width : 1px) when (ispixel(@width)) {border: @width solid @line-color;}
+.border(@style : solid) when (iskeyword(@style)) {border: 1px @style @line-color;}
+.border(@color : @line-color) when (iscolor(@color)) {border: 1px solid @color;}
+.border(@border) when (default()) {border: @border;}
+
+.border-top(0) {border-top: 0;}
+.border-top(@width : 1px) when (ispixel(@width)) {border-top: @width solid @line-color;}
+.border-top(@style : solid) when (iskeyword(@style)) {border-top: 1px @style @line-color;}
+.border-top(@color : @line-color) when (iscolor(@color)) {border-top: 1px solid @color;}
+.border-top(@border-top) when (default()) {border-top: @border-top;}
+
+.border-right(0) {border-right: 0;}
+.border-right(@width : 1px) when (ispixel(@width)) {border-right: @width solid @line-color;}
+.border-right(@style : solid) when (iskeyword(@style)) {border-right: 1px @style @line-color;}
+.border-right(@color : @line-color) when (iscolor(@color)) {border-right: 1px solid @color;}
+.border-right(@border-right) when (default()) {border-right: @border-right;}
+
+.border-bottom(0) {border-bottom: 0;}
+.border-bottom(@width : 1px) when (ispixel(@width)) {border-bottom: @width solid @line-color;}
+.border-bottom(@style : solid) when (iskeyword(@style)) {border-bottom: 1px @style @line-color;}
+.border-bottom(@color : @line-color) when (iscolor(@color)) {border-bottom: 1px solid @color;}
+.border-bottom(@border-bottom) when (default()) {border-bottom: @border-bottom;}
+
+.border-left(0) {border-left: 0;}
+.border-left(@width : 1px) when (ispixel(@width)) {border-left: @width solid @line-color;}
+.border-left(@style : solid) when (iskeyword(@style)) {border-left: 1px @style @line-color;}
+.border-left(@color : @line-color) when (iscolor(@color)) {border-left: 1px solid @color;}
+.border-left(@border-left) when (default()) {border-left: @border-left;}
+
+
+
+// 字体
+.font-family(@style: @font-family){
+  font-family: @style;
+}
+
+
+
+// 背景
+.background(@file; @styles) when (isstring(@file)){
+  background: url("@{position}@{file}") @styles;
+}
+
+.background(@background) when (default()){
+  background: @background;
+}
+
+
+
+// 过渡效果
+// CSS3 的过渡使用起来更加麻烦，你必须最大化的支持各种浏览器，因此你需要定义 5 个前缀：
+.transition(@property: all) when (isstring(@property)) {// 目前只能用字符串
+  @t: '@{property} .2s ease-in-out';
+  .compatibility-attribute(transition; @t; true);
+  //         transition: e(@property) .2s ease-in-out;
+}
+
+.transition(@duration) when (isnumber(@duration)) and (isunit(@duration, 's')){
+  @t: 'all @{duration} ease-in-out';
+  .compatibility-attribute(transition; @t; true);
+  //         transition: all @duration ease-in-out;
+}
+
+.transition(@timing-function: ease-in-out) when (iskeyword(@timing-function)){//空值状态
+  @t: 'all .2s @{timing-function}';
+  .compatibility-attribute(transition; @t; true);
+  //         transition: all .2s @timing-function;
+}
+
+.transition(@transition) when (default()) {
+  @t: '@{transition}';
+  .compatibility-attribute(transition; @t; true);
+  //         transition: @transition;
+}
+
+.transition-transform(@transition) {
+  -webkit-transition: -webkit-transform @transition;
+     -moz-transition: -moz-transform @transition;
+       -o-transition: -o-transform @transition;
+          transition: transform @transition;
+}
+
+.transition-property(@transition-property) when (isstring(@transition-property)) {
+  @t: @transition-property;
+  .compatibility-attribute(transition-property; @t; true);
+  //         transition-property: e(@transition-property);
+}
+
+.transition-property(@transition-property) when (default()) {
+  @t: '@{transition-property}';
+  .compatibility-attribute(transition-property; @t; true);
+  //         transition-property: @transition-property;
+}
+
+
+
+// 变形
+.translate(@x; @y) {
+  @t: 'translate(@{x}, @{y})';
+  .compatibility-attribute(transform; @t; true);
+  //         transform: translate(@x, @y);
+}
+
+//可以使用 CSS3 来对元素进行角度旋转、缩放和倾斜等效果
+.transform (@rotate: 90deg; @scale: 1; @skew: 1deg; @translate: 10px) when(isnumber(@rotate)) and (isnumber(@scale)) and (isnumber(@skew)) and (isnumber(@translate)){
+    @t: 'rotate(@{rotate}) scale(@{scale}) skew(@{skew}) translate(@{translate})';
+    .compatibility-attribute(transform; @t; true);
+    // transform: rotate(@rotate) scale(@scale) skew(@skew) translate(@translate);
+}
+
+.transform (@transform) when (default()){
+  @t: '@{transform}';
+    .compatibility-attribute(transform; @t; true);
+  // transform: @transform;
+}
+
+.transform-origin(@transform-origin){
+  @t: '@{transform-origin}';
+    .compatibility-attribute(transform-origin; @t; true);
+  // transform-origin: @transform-origin;
+}
+
+
+
+// 多列
+.columns (@width: 0; @count: 0){
+  @t: '@{width} @{count}';
+  .compatibility-attribute(columns; @t; true);
+  // columns: @width @count;
+}
+
+.column-rule (@width: 1px; @style: solid; @color: #226dd4){
+  @t: '@{width} @{style} @{color}';
+  .compatibility-attribute(column-rule; @t; true);
+  // column-rule: @width @style @color;
+}
+
+
+// 动画
+.animation(@name; @duration: 0s; @timing-function: ease; @delay: 0s; @iteration-count: 1; @direction: normal; @fill-mode: none) when (isstring(@name)){
+  @t: '@{name} @{duration} @{timing-function} @{delay @{iteration-count} @{direction} @{fill-mode}}';
+  .compatibility-attribute(animation; @t; true);
+  // animation: @name @duration @timing-function @delay @iteration-count @direction @fill-mode;
+}
+
+.animation(@animation) when (default()){
+  @t: '@{animation}';
+  .compatibility-attribute(animation; @t; true);
+  animation: @animation;
+}
+
+// **************************** 特定需求功能 ***********************************
+
+
+
+
+// ellect：用于显示内容折行【如英文或数字过长的换行显示(*空格处换行*)】
+.wrap(){
+    text-wrap: none;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    word-wrap: break-word;
+}
+
+
+
+// effect：文本超出显示省略号 
+.ellipsis(){
+  overflow: hidden;
+  white-space: nowrap;
+  @t: 'ellipsis';
+  .compatibility-attribute(text-overflow; @t; true);
+  // text-overflow: ellipsis;
+}
+
+
+
+// effect：取消选中
+.user-select(){
+  @t: 'none';
+  .compatibility-attribute(user-select; @t; true);
+  // user-select:none;
+}
+
+
+
+// effect：三角形 
+// Trangle(宽度，颜色（上、右、下、左）)
+.trangle(@width: 8px; @pram1: transparent; @pram2: transparent; @pram3: transparent; @pram4: transparent){
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: @width;
+    border-color: @pram1 @pram2 @pram3 @pram4;
+}
+
+
+
+// ellect：颜色渐变 
+//渐变是 CSS3 最复杂的属性之一，有上百万中不同的设置组合，但我们常用的无非几种。实现两个不同颜色之间的渐变，你可以定义开始颜色和最终颜色，这里我们使用最新的渐变语法，浏览器的支持情况请看这里(https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)。
+.gradient(@origin: top; @startColor; @endColor){
+    background-color:@startColor/2 + @endColor/2;
+    filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='@{startColor}', endColorstr='@{endColor}')";
+    @t: 'linear-gradient(@{origin}, @{startColor}, @{endColor})';
+    .compatibility-attribute(background-image; @t; false);
+    // background-image: linear-gradient(@origin, @startColor, @endColor);
+}
+.gradient(@gradient) when (isstring(@gradient)) and (default()){
+  @t: 'linear-gradient(@{gradient})';
+    .compatibility-attribute(background-image; @t; false);
+    // background-image: linear-gradient(@origin, @startColor, @endColor);
+}
+// 过度区，上面的会删除 
+.linear-gradient(@origin: top; @startColor; @endColor){
+    background-color:@startColor/2 + @endColor/2;
+    filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='@{startColor}', endColorstr='@{endColor}')";
+    @t: 'linear-gradient(@{origin}, @{startColor}, @{endColor})';
+    .compatibility-attribute(background-image; @t; false);
+    // background-image: linear-gradient(@origin, @startColor, @endColor);
+}
+.linear-gradient(@gradient) when (isstring(@gradient)) and (default()){
+  @t: 'linear-gradient(@{gradient})';
+    .compatibility-attribute(background-image; @t; false);
+    // background-image: linear-gradient(@origin, @startColor, @endColor);
+}
+
+
+
+// ellect：设置字体的抗锯齿或者说光滑度的属性
+// 有3个属性：none用于小像素的文本、subpixel-antialiased浏览器默认的、antialiased反锯齿。
+.font-smoothing(@value){
+  @t: '@{value}';
+    .compatibility-attribute(font-smoothing; @t; true);
+  //      font-smoothing: @value;
+}
+
+
+
+// ellect：设置居中
+.middle() {
+  position: absolute;top: 0;right: 0;bottom: 0;left: 0;margin: auto;
+}
+
+
+// ellect: :after伪类+content 清除浮动的影响
+.clear(){
+  clear: both;content: "";display: table;visibility: hidden;height: 0;
+}
+
+// .m(@x) when (isnumber(@x)) {content: 'true'}
+// .m(@x: 1) when (isnumber(@x)) {content: '@{x}'}
+// .m(@x: 1) when (default()) {content: 'flase'}
+// .m(@x: 1) when (default()), not(default()) {content: 'default'} //不管默认还是不默认都有次此内容
+// div {.m(); } // test
+
+// 无论任何字符串的样式都能正确输出
+// @top: 'top: -14px;left: 0;right: 0; bottom: auto;';
+// div {content: e('{}@{top}');}
+// 方法使用
+// 方法一
+// @top: 'top: -14px;left: 0;right: 0; bottom: auto;';
+// .m(){.trangle(@width: 7px; @pram3: #fff;);}
+// div {content: e('{}@{top}');.m();}
+// 方法二
+// @top: 'top: -14px;left: 0;right: 0; bottom: auto;';
+// .m(){content: e('{}@{top}');.trangle(@width: 7px; @pram3: #fff;);}
+// div {.m();}
