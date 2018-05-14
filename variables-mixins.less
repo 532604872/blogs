@@ -1,5 +1,7 @@
-// variables-mixins.less
-// version: 1.0
+/*  variables-mixins.less
+*   version: 1.0
+*	  Create person : Mr.Z
+*/
 
 
 // 定义全局变量
@@ -29,10 +31,10 @@
 
 // 透明度
 .opacity(@opacity) {
- -khtml-opacity: @opacity; 
-   -moz-opacity: @opacity;   
+ -khtml-opacity: @opacity;
+   -moz-opacity: @opacity;
         opacity: @opacity;
-	
+
 	// IE8 filter
   @opacity-ie: (@opacity * 100);
   filter: ~"alpha(opacity=@{opacity-ie})";
@@ -49,7 +51,7 @@
       -ms-border-radius: @radius;
        // Opera
 	     -o-border-radius: @radius;
-          // default 
+          // default
           border-radius: @radius;
 }
 .border-top-radius(@radius) {
@@ -324,7 +326,7 @@
 
 
 
-// effect：文本超出显示省略号 
+// effect：文本超出显示省略号
 .ellipsis(){
   overflow: hidden;
   white-space: nowrap;
@@ -344,7 +346,7 @@
 
 
 
-// effect：三角形 
+// effect：三角形
 // Trangle(宽度，颜色（上、右、下、左）)
 .trangle(@width: 8px; @pram1: transparent; @pram2: transparent; @pram3: transparent; @pram4: transparent){
     width: 0;
@@ -356,7 +358,7 @@
 
 
 
-// ellect：颜色渐变 
+// ellect：颜色渐变
 //渐变是 CSS3 最复杂的属性之一，有上百万中不同的设置组合，但我们常用的无非几种。实现两个不同颜色之间的渐变，你可以定义开始颜色和最终颜色，这里我们使用最新的渐变语法，浏览器的支持情况请看这里(https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)。
 .gradient(@origin: top; @startColor; @endColor){
     background-color:@startColor/2 + @endColor/2;
@@ -370,7 +372,7 @@
     .compatibility-attribute(background-image; @t; false);
     // background-image: linear-gradient(@origin, @startColor, @endColor);
 }
-// 过度区，上面的会删除 
+// 过度区，上面的会删除
 .linear-gradient(@origin: top; @startColor; @endColor){
     background-color:@startColor/2 + @endColor/2;
     filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='@{startColor}', endColorstr='@{endColor}')";

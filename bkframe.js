@@ -3,7 +3,6 @@
 *   This is common fram
 *	  Create person : s.m
 *   contributors: nemo
-*   update time: 2015-9-3
 */
 
 /*
@@ -2166,8 +2165,6 @@ function SrcDialog() {
         }
     }
     function createOuter(options) {
-
-
         options = $.updateObject(options, {
             confirm: "确定",
             cancel: "取消",
@@ -2335,7 +2332,7 @@ function rid(callback){
     rid && ( rid = rid.substr( 0, 6 ) );
     $.ajax({
         type: 'GET',
-        url: '/api/bklive/rid',
+        url: '/api/rid',
         dataType: 'json',
         data: {
             rid: rid
