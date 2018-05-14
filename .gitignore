@@ -1,0 +1,15 @@
+logs
+*.log
+pids
+node_modules
+bower_components
+.DS_Store
+adminDist
+supplierDist
+release
+test
+/.idea
+/*.project
+
+#zero
+Package-lock.json
