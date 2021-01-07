@@ -94,7 +94,7 @@ $ npm i -g nrm // 本地全局安装
 $ nrm ls // 输出可选源
 $ nrm current // 查看当前使用源
 ```
-
+<img src="../../files/images/5229BC73-A530-4D2E-96C1-1A3D7F5D64C3.png" width="50%"/>
 
 * 切换源
 ```
@@ -123,7 +123,7 @@ $ nrm test npm
 $ nrm test taobao
 $ nrm test yhnpm
 ```
-
+<img src="../../files/images/8F776D81-212A-4521-ABF1-5EA72CD4D1B5.png" width="50%"/>
 
 #五、yrm
 yrm 是 yarn 的镜像源管理工具，同 nrm 命令一致。

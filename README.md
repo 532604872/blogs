@@ -6,4 +6,5 @@
 <ol>
 	<li><a href="./git常用操作.md">git常用操作</a></li>
 	<li><a href="./interview/面试题解答.md">2019面试题解答</a></li>
+	<li><a href="./2021/01/README.md">npm | yarn | nvm | nrm | npm-check —— 常用的命令和方法</a></li>
 </ol>
