@@ -13,4 +13,6 @@ if (isAppleDevice) {
 }
 ```
 ## viewport
-（官方）[https://developer.mozilla.org/zh-CN/docs/Web/HTML/Viewport_meta_tag]
+[官方](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Viewport_meta_tag)
+
+> 许多网站列出常用设备的视区大小。例如：[请参阅](https://viewportsizer.com/devices/)。有关最准确和最新的信息，请参考设备制造商的网站。
