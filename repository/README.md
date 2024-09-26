@@ -2,6 +2,8 @@
 
 ## 框架
 
+- [React 官方中文文档](https://zh-hans.react.dev/)
+
 ### 跨端
 - [taro](https://taro.zone/)
 
@@ -26,7 +28,16 @@
 - []
 
 
+## nextjs
+用于 Web 的 React 框架
+ - [官方免费课程](https://nextjs.org/learn/dashboard-app)
+ - [V14版本特点](https://nextjs.org/blog/next-14)
+
+
+ - [Next.js14（App Router）基础知识](https://tehub.com/a/ejnjRkCVLv)
+
 ## cabloyjs
+一款内置工作流引擎的Node.js全栈框架
 - [测试环境](https://test.cabloy.com/)
 - [文档](https://cabloy.com/zh-cn/)
 
