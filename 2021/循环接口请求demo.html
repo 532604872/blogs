@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>^_^</title>
+</head>
+<body>
+
+</body>
+<script>
+window.onload = function () {
+  var params = JSON.stringify({"param":{"isAgg":"0","isExport":"0","shopId":[],"brand":[],"area":[],"venderChildId":[],"goodsStatus":[],"goodsFlag":[],"goodsInfo":"","orderType":"asc"}})
+
+  const xhr = new XMLHttpRequest()
+  // 规定请求的类型、URL 以及是否异步处理请求。
+  //   三个参数分别是
+  //     - method：请求的类型（GET 或 POST ）
+  //     - url：文件在服务器上的位置
+  //     - async：true（异步）或 false（同步）
+  xhr.open('post', 'http://USER-URL', true)
+  xhr.setRequestHeader('Content-Type', `application/json; charset=UTF-8`)
+  xhr.responseType = 'blob'
+  xhr.onload = function() {
+    if (xhr.readyState == 4 && xhr.status === 200) {
+      document.write(xhr.responseText)
+      // window.open(location.href)
+      window.setTimeout(function () {
+        // window.close()
+      }, 1000)
+    }
+  }
+  xhr.send(params)
+}
+</script>
+</html>

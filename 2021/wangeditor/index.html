@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/wangEditor/3.1.1/wangEditor.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.js"></script>
+  <!-- <script src="./mock.js"></script> -->
+</head>
+
+<body>
+  <div>
+    <select id="select" onchange="onSelect()"></select>
+
+    <input id="id-input" placeholder="输入id 等于新增" />
+    <div>
+      <input id="appurl" placeholder="" />
+    </div>
+    <div>
+      <div id="wangEditor">
+      </div>
+      <button type="button" style="margin-top: 4px" onclick="clearContent()">清空内容</button>
+    </div>
+    <!-- <div style="align-self: center; text-align: center;">
+        <button onclick="getHtml()">文本转HTML</button>
+        <button style="margin-top: 14px;" onclick="getText()">HTML转文本 </button>
+      </div>
+      <div id="html-content" style="width: 100%;">
+        <textarea id="htmlcontent" rows="22" style="width: 100%" placeholder="html 转 文本"></textarea>
+        <button type="button" onclick="clearHtml()">清空内容</button>
+      </div> -->
+    <button style="margin-top: 20px;" onclick="onSubmit()">提交</button>
+  </div>
+</body>
+<script>
+  // console.log(mock)
+  const E = window.wangEditor;
+  const editor = new E("#wangEditor");
+  editor.customConfig.colors = [
+    '#000000',
+    '#ff0000',
+  ]
+  editor.create();
+
+  initParams()
+
+  async function getMock() {
+    return new Promise((resolve) => {
+      $.getJSON('./mock.json', function (mock) {
+        resolve(mock)
+      })
+    })
+  }
+
+  async function initParams() {
+    const mock = await getMock();
+    for (let i = 0; i < mock.length; i++) {
+      const crr = mock[i];
+      $('#select').append(`<option value=${crr.id}>${crr.id}</option>`)
+    }
+    if (mock.length > 0) {
+      $('#htmlcontent').val(mock[0].html)
+      $('#appurl').val(mock[0].dowloadAppUrl)
+      editor.txt.append(mock[0].html)
+    }
+    // $.getJSON('./mock.json', function (mock) {
+    // })
+  }
+
+  function selall(e) {
+    var range = window.getSelection ? window.getSelection() : document.selection.createRange();
+    var ni = e.childNodes.length;
+    range.removeAllRanges();
+    range.selectAllChildren(e);
+    return range
+  }
+
+  function copyCode(e) {
+    // const content = document.getElementById('div2')
+    // window.getSelection().selectAllChildren(content.children)
+    var jb51Input = document.createElement('div2');
+    jb51Input.style.opacity = 0;
+    jb51Input.style.position = "absolute";
+    jb51Input.style.left = "100%";
+    // c.appendChild(jb51Input);
+    var range = selall(e);
+    jb51Input.value = e.innerText; //range.toString();
+    range.removeAllRanges();
+    jb51Input.select();
+    if (document.execCommand('copy')) {
+      showot("已复制");
+      return true;
+    }
+    // c.removeChild(jb51Input);
+  }
+
+  function getText() {
+    const txt = $('#htmlcontent').val()
+    editor.txt.append(txt)
+  }
+
+  function getHtml() {
+    $('#htmlcontent').val(editor.txt.html())
+  }
+
+  function clearContent() {
+    editor.txt.clear()
+  }
+
+  function clearHtml() {
+    $('#htmlcontent').val('')
+  }
+
+  async function onSelect() {
+    const val = $('#select').val();
+    const mock = await getMock();
+    const crr = mock.find(item => item.id == val)
+    $('#htmlcontent').val(crr.html)
+  }
+
+  async function onSubmit() {
+    const id = $('#id-input').val()
+    const mock = await getMock();
+    const data = [...mock]
+
+    if (!!id) { // 新增
+      data.push({
+        id: id,
+        html: editor.txt.html(),
+        dowloadAppUrl: $('#appurl').val()
+      })
+    } else {
+      const val = $('#select').val();
+      const index = data.findIndex(i => i.id == val);
+      data[index] = {
+        ...data[index],
+        html: editor.txt.html(),
+        dowloadAppUrl: $('#appurl').val()
+      }
+    }
+    const blob = new Blob([JSON.stringify(data)], { type: "text/plain" })
+    //const blob = new Blob([data], {type: 'audio/wav'})
+    const a = document.createElement("a")
+    a.href = URL.createObjectURL(blob)
+    a.download = "fileName" // 这里填保存成的文件名
+    a.click()
+    URL.revokeObjectURL(a.href)
+    a.remove();
+  }
+
+</script>
+
+</html>

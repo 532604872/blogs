@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>双色球</title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+	const double = {
+		redSum: 6,
+		redList: [],
+		init: () => {
+			// blue
+			document.write("蓝球：- " + double.getRandom(1,16) + ' - ');
+			document.write('<br>')
+
+			// red
+			let redList = [];
+			for (let i = 0, l = double.redSum; i < l; i++) {
+				double.redList.push(double.getRedList())
+			}
+			document.write("红球：- " + double.redList.sort((a, b) => a - b).join(' - ') + ' - ');
+		},
+		getRandom: (num1,num2) => {
+            var min = num1,
+                max = num2;
+            if(num1-num2>0){
+                min = num2;
+                max = num1;
+            }
+            return Math.floor(Math.random()*(max-min+1) + min);      //返回min-max的随机整数
+	    },
+	    getRedList: () => {
+	    	if (double.redList.length === double.redSum) return ''
+
+	    	let redNumber = double.getRandom(1,33)
+			if (!double.redList.includes(redNumber)) {
+				return redNumber
+			} else {
+				return double.getRedList()
+			}
+	    }
+	}
+
+	window.onload = function () {
+		double.init()
+	}
+</script>
+</html>

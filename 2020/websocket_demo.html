@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    alert("111");
+    var websocket = null;
+    //判断浏览器是否支持 webSocket
+    if('WebSocket' in window){
+        websocket = new WebSocket("ws://localhost:8080/webSocket/scale");
+    }else{
+        alert("改浏览器不支持webSocket");
+    }
+    //打开 webSocket链接
+    websocket.onopen = function (event) {
+        console.log("建立链接");
+    }
+    //关闭
+    websocket.onclose = function (event) {
+        console.log("关闭链接");
+    }
+    //接收消息
+    websocket.onmessage = function (event) {
+        console.log("收到消息:"+event.data);
+        alert("收到消息:"+event.data);
+    }
+    //发生错误
+    websocket.onerror = function (event) {
+        alert("webSocket通讯发生错误");
+    }
+    //当窗口关闭时把webSocket关闭
+    window.onbeforeunload = function () {
+        websocket.close();
+    }
+</script>
+</body>
+</html>
