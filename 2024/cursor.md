@@ -14,7 +14,7 @@
   
   Step 2: 设置
   
-  <img src="./assets/1734329823809.jpg">
+  <img src="./assets/1734330117533.jpg">
   
   Setp 3: 添加
   
